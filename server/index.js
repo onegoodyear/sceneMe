@@ -8,6 +8,10 @@ app.use(express.json());
 app.use("/users", require("./routes/user"));
 app.use("/lists", require("./routes/list"));
 
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 mongoose
   .connect(process.env.mongo_uri, {
     useNewUrlParser: true,
