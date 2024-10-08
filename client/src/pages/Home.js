@@ -1,6 +1,7 @@
 import Main from "../components/Main";
 import Row from "../components/Row";
-import requests from "../Api";
+
+import { endpoints } from "../Api";
 
 const Home = () => {
   return (
@@ -9,22 +10,22 @@ const Home = () => {
       <Row
         rowId={1}
         title="Top Rated Movies"
-        fetchUrl={requests.topRatedMovies}
+        endpoint={endpoints.topRatedMovies}
       />
       <Row
         rowId={2}
         title="Top Rated Shows"
-        fetchUrl={requests.topRatedShows}
+        endpoint={endpoints.topRatedShows}
       />
       <Row
         rowId={3}
         title="Trending"
-        fetchUrl={requests.trending}
+        endpoint={endpoints.trending}
       />
       <Row
         rowId={4}
         title="Up Coming"
-        fetchUrl={requests.upComing}
+        endpoint={endpoints.upComing}
       />
     </>
   );

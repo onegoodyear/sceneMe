@@ -1,17 +1,15 @@
-import requests from "../Api";
+import { endpoints, fetchFromTMDB } from "../Api";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 const Main = () => {
   const [mainMovie, setMainMovie] = useState(null);
 
   useEffect(() => {
-    axios.get(requests.topRatedMovies).then((res) => {
+    fetchFromTMDB(endpoints.topRatedMovies).then((res) => {
       console.log(res.data.results);
       setMainMovie(
         res.data.results[Math.floor(Math.random() * res.data.results.length)]
       );
-      console.log(mainMovie?.id);
     });
   }, []);
 

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import MovieCard from "./MovieCard.js";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { fetchFromTMDB } from "../Api.js";
 
-const Row = ({ title, fetchUrl, rowId }) => {
+const Row = ({ title, endpoint, rowId }) => {
   const [medias, setMedias] = useState([]);
 
   useEffect(() => {
-    axios.get(fetchUrl).then((response) => {
+    fetchFromTMDB(endpoint).then((response) => {
       setMedias(response.data.results);
     });
-  }, [fetchUrl]);
+  }, [endpoint]);
 
   const slideLeft = () => {
     let slider = document.getElementById("slider" + rowId);
@@ -18,7 +18,7 @@ const Row = ({ title, fetchUrl, rowId }) => {
   };
   const slideRight = () => {
     let slider = document.getElementById("slider" + rowId);
-    slider.scrollRight = slider.scrollRight + 500;
+    slider.scrollLeft = slider.scrollLeft + 500;
   };
 
   return (
