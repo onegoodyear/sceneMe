@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
-  const register = (user, token) => {
+  const signup = (user, token) => {
     setUser(user);
     localStorage.setItem("token", token);
   };
@@ -24,24 +24,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch(
-        `${server_api}/users/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.user) setUser(data.user);
-            else localStorage.removeItem("token");
-          })
-      );
+      fetch(`${server_api}/users/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) setUser(data.user);
+          else localStorage.removeItem("token");
+        })
+        .catch((err) => {
+          console.log(err);
+          localStorage.removeItem("token");
+        });
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, signup, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -49,12 +49,14 @@ const Login = () => {
               className="flex flex-col gap-2"
             >
               <input
+                onChange={(e) => setUsername(e.target.value)}
                 type="text"
                 placeholder="username"
                 autoComplete="username"
                 className="py-2 px-4 bg-gray-600 rounded my-2 h-12 appearance-none border-none focus:outline-none focus:ring-red-600 focus:ring-2"
               ></input>
               <input
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
                 autoComplete="password"
