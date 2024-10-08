@@ -10,10 +10,9 @@ exports.createUser = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log(token);
     res.status(201).send({ message: "User created successfully", user, token });
   } catch (err) {
-    res.status(400).send({error: err.message || "An error Occured"});
+    res.status(400).send({ error: err.message || "An error Occured" });
   }
 };
 

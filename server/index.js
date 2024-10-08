@@ -8,7 +8,8 @@ const allowedOrigins = ["http://localhost:3000", "https://sceneme.vercel.app"];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin)) {
+    // Allow requests without an origin (like mobile apps, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -16,8 +17,6 @@ const corsOptions = {
   },
   credentials: true, // Allow cookies or authentication headers
 };
-
-
 
 const app = express();
 app.use(express.json());
@@ -29,8 +28,12 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
+
+const mongoUri = process.env.MONGO_URI;
+const port = process.env.PORT || 10000; 
+
 mongoose
-  .connect(process.env.mongo_uri, {
+  .connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -38,9 +41,9 @@ mongoose
     console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.log("Failed to connect to MongoDB", err);
+    console.error("Failed to connect to MongoDB", err);
   });
 
-app.listen(process.env.port, () => {
-  console.log("Server is running on port", process.env.port);
+app.listen(port, () => {
+  console.log("Server is running on port", port);
 });
