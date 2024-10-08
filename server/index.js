@@ -1,6 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
+
+// Allow requests from 'localhost:3000' (your React app) or any other origin
+const allowedOrigins = ["http://localhost:3000", "https://sceneme.vercel.app"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow cookies or authentication headers
+};
+
+app.use(cors(corsOptions));
 
 const app = express();
 app.use(express.json());
