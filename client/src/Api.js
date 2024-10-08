@@ -2,9 +2,9 @@ import axios from "axios";
 
 const server_api = "https://sceneme.onrender.com";
 
-const apiKey = process.env.REACT_APP_TMDB_API_KEY;
+const api_key = process.env.REACT_APP_TMDB_API_KEY;
 
-if (!apiKey) {
+if (!api_key) {
   console.error("API Key is missing!");
 }
 
@@ -16,7 +16,9 @@ const endpoints = {
 };
 
 const fetchFromTMDB = (endpoint) => {
-  return axios.get(`https://api.themoviedb.org/3${endpoint}&api_key=${apiKey}`);
+  return axios.get(
+    `https://api.themoviedb.org/3${endpoint}&api_key=${api_key}`
+  );
 };
 
 export { endpoints, fetchFromTMDB, server_api };

@@ -8,7 +8,7 @@ const NavBar = () => {
       </h1>
       <div>
         <Link to="/login">
-          <button className="text-white px-4">Sign in</button>
+          <button className="text-white px-4">Sign In</button>
         </Link>
         <Link to="/signup">
           <button className="bg-red-600 px-6 py-2 text-white rounded">
