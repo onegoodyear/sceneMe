@@ -1,8 +1,22 @@
-const requests = {
-  topRatedMovies: `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`,
-  topRatedShows: `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`,
-  trending: `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`,
-  upComing: `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`,
+import axios from "axios";
+
+const server_api = "https://sceneme.onrender.com";
+
+const apiKey = process.env.REACT_APP_TMDB_API_KEY;
+
+if (!apiKey) {
+  console.error("API Key is missing!");
+}
+
+const endpoints = {
+  topRatedMovies: `/movie/top_rated?language=en-US&page=1`,
+  topRatedShows: `/tv/top_rated?language=en-US&page=1`,
+  trending: `/trending/all/day?language=en-US&page=1`,
+  upComing: `/movie/upcoming?language=en-US&page=1`,
 };
 
-export default requests;
+const fetchFromTMDB = (endpoint) => {
+  return axios.get(`https://api.themoviedb.org/3${endpoint}&api_key=${apiKey}`);
+};
+
+export { endpoints, fetchFromTMDB, server_api };
