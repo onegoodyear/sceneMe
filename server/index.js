@@ -17,11 +17,11 @@ const corsOptions = {
   credentials: true, // Allow cookies or authentication headers
 };
 
-app.use(cors(corsOptions));
+
 
 const app = express();
 app.use(express.json());
-
+app.use(cors(corsOptions));
 app.use("/users", require("./routes/user"));
 app.use("/lists", require("./routes/list"));
 
