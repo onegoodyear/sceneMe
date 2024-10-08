@@ -1,6 +1,37 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { server_api } from "../Api";
 
 const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { signup } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      fetch(`${server_api}/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            signup(data.user, data.token);
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="w-full h-screen">
       <img
@@ -13,20 +44,28 @@ const SignUp = () => {
         <div className="mx-auto max-w-[450px] h-[600px] bg-black/75 text-white">
           <div className="max-w-[350px] py-24 px-8 mx-auto">
             <h1 className="font-bold text-3xl my-4 pl-1">Sign Up</h1>
-            <form className="flex flex-col gap-2">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-2"
+            >
               <input
-                type="email"
-                placeholder="Email"
-                autoComplete="email"
+                onChange={(e) => setUsername(e.target.value)}
+                type="text"
+                placeholder="username"
+                autoComplete="username"
                 className="py-2 px-4 bg-gray-600 rounded my-2 h-12 appearance-none border-none focus:outline-none focus:ring-red-600 focus:ring-2"
               ></input>
               <input
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
                 autoComplete="password"
                 className="py-2 px-4 bg-gray-600 rounded my-2 h-12 appearance-none border-none focus:outline-none focus:ring-red-600 focus:ring-2"
               ></input>
-              <button className="bg-red-600 my-2 h-12 font-bold rounded">
+              <button
+                type="submit"
+                className="bg-red-600 my-2 h-12 font-bold rounded"
+              >
                 Sign Up
               </button>
             </form>
