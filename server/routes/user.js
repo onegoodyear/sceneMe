@@ -17,7 +17,7 @@ router.post("/update", authenticate, updateUser);
 
 router.post("/delete", authenticate, deleteUser);
 
-router.post("/me", authenticate, sendUser);
+router.get("/me", authenticate, sendUser);
 
 router.post("/logout", authenticate, (req, res) => {
   res.status(200).send({ message: "Logout successful" });
