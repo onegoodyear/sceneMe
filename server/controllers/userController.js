@@ -69,3 +69,11 @@ exports.updateUser = async (req, res) => {
     res.status(400).send(err);
   }
 };
+
+
+exports.sendUser = async (req, res) => {
+  try {
+    res.status(200).send(req.user);
+  } catch (err) {
+    res.status(400).send({err, message: "token not found"});
+  }};
