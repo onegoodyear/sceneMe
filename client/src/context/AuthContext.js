@@ -33,15 +33,18 @@ export const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           });
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+
           const data = await res.json();
-          console.log(data.user);
-          if (data.user) {
-            setUser(data.user);
+          if (data) {
+            setUser(data);
           } else {
             localStorage.removeItem("token");
           }
         } catch (err) {
-          console.log(err);
+          console.log("Error fetching user:", err);
           localStorage.removeItem("token");
         }
       }
@@ -49,7 +52,6 @@ export const AuthProvider = ({ children }) => {
     };
     fetchUser();
   }, []);
-
   return (
     <AuthContext.Provider value={{ user, signup, login, logout, loading }}>
       {children}

@@ -17,6 +17,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
+  console.log(req.body);
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ username });
@@ -70,10 +71,10 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
 exports.sendUser = async (req, res) => {
   try {
     res.status(200).send(req.user);
   } catch (err) {
-    res.status(400).send({err, message: "token not found"});
-  }};
+    res.status(400).send({ err, message: "token not found" });
+  }
+};
