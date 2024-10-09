@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <nav className="flex items-center justify-between w-full container absolute z-[100] mt-4">
-      <h1 className="text-red-600 text-2xl md:text-4xl font-bold cursor-pointer">
-        SceneMe
-      </h1>
+      <Link to="/">
+        <h1 className="text-red-600 text-2xl md:text-4xl font-bold cursor-pointer">
+          SceneMe
+        </h1>
+      </Link>
       <div>
         <Link to="/login">
           <button className="text-white px-4">Sign In</button>

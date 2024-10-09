@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { server_api } from "../Api";
@@ -6,6 +6,7 @@ import { server_api } from "../Api";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { login } = useAuth();
 
@@ -25,6 +26,7 @@ const Login = () => {
             alert(data.error);
           } else {
             login(data.user, data.token);
+            navigate("/account");
           }
         });
     } catch (err) {

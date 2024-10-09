@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { server_api } from "../Api";
@@ -8,6 +8,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
 
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ const SignUp = () => {
             signup(data.user, data.token);
           }
         });
+        navigate("/account");
     } catch (err) {
       console.log(err);
     }
