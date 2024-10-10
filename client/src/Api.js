@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const server_api = "http://scneme.onrender.com";
+const server_api = "https://sceneme.onrender.com";
 
 const api_key = process.env.REACT_APP_TMDB_API_KEY;
 
