@@ -28,16 +28,15 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-
 const mongoUri = process.env.MONGO_URI;
-const port = process.env.PORT || 10000; 
+const port = process.env.PORT || 10000;
 
 mongoose
   .connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
+  .then(async () => {
     console.log("Connected to MongoDB");
   })
   .catch((err) => {

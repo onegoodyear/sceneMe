@@ -21,7 +21,7 @@ const MediaSchema = new Schema(
     poster: {
       type: String,
     },
-    tmdbID: {
+    imdbID: {
       type: String, // Use TMDB ID instead of IMDb ID
       required: true,
     },

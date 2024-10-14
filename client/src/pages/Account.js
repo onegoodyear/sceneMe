@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { server_api } from "../Api";
+import Search from "../components/Search";
 
 const Account = () => {
   const { user, logout } = useAuth();
@@ -69,41 +70,52 @@ const Account = () => {
       <div className="flex flex-col lg:flex-row">
         {/* Main Content */}
         <div className="flex-1 p-5">
-          <h1 className="text-3xl font-bold mb-5">My Lists</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold mb-5">My Lists</h1>
+            {/* <Search /> */}
 
-          <button
-            onClick={handleAddList}
-            className="bg-red-600 px-4 py-2 rounded mb-5"
-          >
-            Add New List
-          </button>
+            <button
+              onClick={handleAddList}
+              className="bg-red-600 px-4 py-2 rounded mb-5"
+            >
+              Add New List
+            </button>
+          </div>
 
           {/* User Lists */}
           <div>
             {lists.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(200px,_240px))] gap-4">
                 {lists.map((list) => (
                   <div
                     key={list._id}
-                    className="bg-gray-800 p-4 rounded"
+                    className="bg-gray-800 p-4 rounded cursor-pointer flex flex-col items-center"
+                    onClick={() => handleEditList(list._id)} // Optionally allow clicking to edit
                   >
-                    <h3 className="text-xl mb-2">{list.name}</h3>
-                    <ul>
-                      {list.items.map((item) => (
-                        <li
-                          key={item.tmdbID} // Changed to tmdbID to match your model
-                          className="mb-1"
-                        >
-                          <span className="font-bold">{item.title}</span> (
-                          {item.year}) - Rating: {item.rating}/10
-                        </li>
-                      ))}
-                    </ul>
+                    {list.items.length > 0 ? (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w200${list.items[0].poster}`}
+                        alt={list.items[0].title}
+                        className="rounded mb-2 h-[300px]"
+                      />
+                    ) : (
+                      <div className="bg-gray-700 w-[200px] h-[300px] rounded mb-2 flex items-center justify-center">
+                        <p className="text-sm">No Image Available</p>
+                      </div>
+                    )}
+
+                    <h3 className="text-lg font-bold">{list.name}</h3>
+                    {list.items.length > 0 && (
+                      <p className="text-sm">
+                        {list.items.length}{" "}
+                        {list.items.length > 1 ? "items" : "item"}
+                      </p>
+                    )}
                     <button
                       onClick={() => handleEditList(list._id)}
                       className="bg-blue-600 px-4 py-2 rounded mt-2"
                     >
-                      Edit List
+                      Edit
                     </button>
                   </div>
                 ))}
