@@ -1,10 +1,11 @@
-const { default: mongoose } = require("mongoose");
 const List = require("../models/List");
 
 exports.getLists = async (req, res) => {
   try {
     const userId = req.user._id;
+    console.log(userId);
     const lists = await List.find({ user_id: userId });
+    console.log(lists);
     res.status(200).json(lists);
   } catch (e) {
     res.status(400).json({ message: e.message });
@@ -19,11 +20,13 @@ exports.createList = async (req, res) => {
     if (!name || !Array.isArray(items)) {
       return res.status(400).json({ message: "Invalid data" });
     }
+
     const newList = new List({
       user_id: userId,
       name,
-      items,
+      items, // Array of media items (includes title, year, director, etc.)
     });
+
     await newList.save();
     res.status(201).json(newList);
   } catch (e) {
@@ -45,12 +48,8 @@ exports.updateList = async (req, res) => {
       return res.status(404).json({ message: "List not found" });
     }
 
-    if (name) {
-      list.name = name;
-    }
-    if (items) {
-      list.items = items;
-    }
+    if (name) list.name = name;
+    if (items) list.items = items; // Update the array of media items
 
     await list.save();
     res.status(200).json(list);
@@ -64,9 +63,11 @@ exports.deleteList = async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id;
     const list = await List.findOneAndDelete({ _id: id, user_id: userId });
+
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
+
     res.status(200).send({ message: "List deleted successfully", list });
   } catch (e) {
     res.status(500).json({ message: e.message });

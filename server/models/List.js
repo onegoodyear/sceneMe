@@ -9,11 +9,9 @@ const MediaSchema = new Schema(
     },
     year: {
       type: Number,
-      required: true,
     },
     director: {
       type: String,
-      required: true,
     },
     rating: {
       type: Number,
@@ -23,8 +21,8 @@ const MediaSchema = new Schema(
     poster: {
       type: String,
     },
-    imdbID: {
-      type: String,
+    tmdbID: {
+      type: String, // Use TMDB ID instead of IMDb ID
       required: true,
     },
   },
@@ -34,7 +32,7 @@ const MediaSchema = new Schema(
 const ListSchema = new Schema(
   {
     user_id: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
